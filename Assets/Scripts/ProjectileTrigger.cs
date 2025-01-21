@@ -14,6 +14,7 @@ public class ProjectileTrigger : MonoBehaviour
     /// </summary>
     public GameObject projectile;    // this is a reference to your projectile prefab
     public Transform spawnPoint; // this is a reference to the transform where the prefab will spawn
+    private GameObject projectileClone;
 
     /// <summary>
     /// Message that is called once per frame
@@ -22,7 +23,9 @@ public class ProjectileTrigger : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(projectile, spawnPoint.position, spawnPoint.rotation);
+            projectileClone = Instantiate(projectile, spawnPoint.position, spawnPoint.rotation);
+            projectileClone.GetComponent<Rigidbody2D>().AddForce(spawnPoint.transform.right * gameObject.GetComponent<PlayerController>().recoilStrength, ForceMode2D.Impulse);
+            Debug.Log(projectileClone.GetComponent<Rigidbody2D>().velocity);
         }
     }
 }

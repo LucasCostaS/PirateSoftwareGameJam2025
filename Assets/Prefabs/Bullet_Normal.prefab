@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7df9ad37f36484e8957055f32de4a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 500
+  speed: 15
   lifespan: 10
 --- !u!1 &3704056654143255575
 GameObject:
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 3649128020829244496}
   - component: {fileID: 6161817485413940016}
   m_Layer: 0
-  m_Name: Bronze 2
+  m_Name: BronzeBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

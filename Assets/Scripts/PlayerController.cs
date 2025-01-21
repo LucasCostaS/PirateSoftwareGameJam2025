@@ -26,13 +26,17 @@ public class PlayerController : MonoBehaviour
             thisAnim.SetTrigger("Shoot");
             thisAnim2.SetTrigger("Shoot");
             rb.AddForce(-shotPoint.transform.right * recoilStrength, ForceMode2D.Impulse);
+            if (Math.Abs(rb.velocity.x) > 12f)
+                rb.velocity.Set(rb.velocity.x - (rb.velocity.x - 12), rb.velocity.y);
+            if (Math.Abs(rb.velocity.y) > 12f)
+                rb.velocity.Set(rb.velocity.x, rb.velocity.y - (rb.velocity.y - 12));
         }     
     }
 
     private void Jump()
     {
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)
-            rb.AddForce(new Vector2(0f, jumpForce));
+            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
     }
 
     private void ChangeDirection()
