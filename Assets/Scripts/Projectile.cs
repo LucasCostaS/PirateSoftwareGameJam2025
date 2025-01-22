@@ -30,7 +30,6 @@ public class Projectile : MonoBehaviour
     /// </summary>
     void Start()
     {
-        Debug.Log(rb.velocity);
         rb.AddForce(rb.transform.right * speed, ForceMode2D.Impulse);
         Destroy(gameObject, lifespan);
     }

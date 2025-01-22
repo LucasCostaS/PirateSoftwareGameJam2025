@@ -21,8 +21,9 @@ public class ProjectileTrigger : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && gameObject.GetComponent<PlayerController>().shotsLeft > 0)
         {
+            gameObject.GetComponent<PlayerController>().shotsLeft--;
             projectileClone = Instantiate(projectile, spawnPoint.position, spawnPoint.rotation);
             projectileClone.GetComponent<Rigidbody2D>().AddForce(spawnPoint.transform.right * gameObject.GetComponent<PlayerController>().recoilStrength, ForceMode2D.Impulse);
             Debug.Log(projectileClone.GetComponent<Rigidbody2D>().velocity);
