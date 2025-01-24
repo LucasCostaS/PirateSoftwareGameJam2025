@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Balance()
+    private void Spin()
     {
         if (!isGrounded)
         {
@@ -63,17 +63,6 @@ public class PlayerController : MonoBehaviour
             Vector3 object_pos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
             float angle = Mathf.Atan2(mouse_pos.y - object_pos.y, mouse_pos.x - object_pos.x) * Mathf.Rad2Deg - 5f;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), rotateSpeed * Time.deltaTime);
-        }
-    }
-
-    private void Landed(){
-        if (rb.IsTouchingLayers(ground)){
-            isGrounded = true;
-            shotsLeft = magazineSize;
-        }
-        else
-        {
-            isGrounded = false;
         }
     }
 
@@ -89,13 +78,44 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Landed();
-        if (!Input.GetKey(KeyCode.LeftShift))
+        Shoot();
+        Jump();
+        ChangeDirection();
+        Spin();
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Loop through all contact points
+        foreach (ContactPoint2D contact in collision.contacts)
         {
-            Shoot();
-            Jump();
-            ChangeDirection();
-            Balance();
+            // Check the normal of each contact point
+            if ((contact.normal.y > 0) && rb.IsTouchingLayers(ground))
+            {
+                isGrounded = true;
+                shotsLeft = magazineSize;
+            }
+            // else if (contact.normal.y < 0)
+            // {
+            //     // The bottom of the collider was hit
+            //     Debug.Log("Bottom hit");
+            // }
+            // else if (contact.normal.x > 0)
+            // {
+            //     // The right side of the collider was hit
+            //     Debug.Log("Right hit");
+            // }
+            // else if (contact.normal.x < 0)
+            // {
+            //     // The left side of the collider was hit
+            //     Debug.Log("Left hit");
+            // }
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision){
+        if (!rb.IsTouchingLayers(ground)){
+            isGrounded = false;
         }
     }
 }

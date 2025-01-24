@@ -18,7 +18,7 @@ public class DeathPlaneController : MonoBehaviour
     {
         if (gameObject.GetComponent<Collider2D>().IsTouching(Player.GetComponent<Collider2D>())){
             Player.transform.position = spawnPoint;
-            Player.GetComponent<Rigidbody2D>().velocity.Set(0f,0f);
+            Player.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
         }    
     }
 }
