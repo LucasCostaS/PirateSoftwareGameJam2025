@@ -28,17 +28,26 @@ public class PlayerController : MonoBehaviour
             thisAnim.SetTrigger("Shoot");
             thisAnim2.SetTrigger("Shoot");
             rb.AddForce(-shotPoint.transform.right * recoilStrength, ForceMode2D.Impulse);
-            if (Math.Abs(rb.velocity.x) > 12f)
-                rb.velocity.Set(rb.velocity.x - (rb.velocity.x - 12), rb.velocity.y);
-            if (Math.Abs(rb.velocity.y) > 12f)
-                rb.velocity.Set(rb.velocity.x, rb.velocity.y - (rb.velocity.y - 12));
+            if (!rb.IsTouchingLayers(ground))
+            {
+                isGrounded = false;
+            }
+            // if (Math.Abs(rb.velocity.x) > 12f)
+            //     rb.velocity = new Vector2(rb.velocity.x - (rb.velocity.x - 12f), rb.velocity.y);
+            // if (Math.Abs(rb.velocity.y) > 12f)
+            //     rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - (rb.velocity.y - 12f));
         }     
     }
 
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.W) && isGrounded){
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            // if (!rb.IsTouchingLayers(ground))
+            // {
+                isGrounded = false;
+            // }
+        }
     }
 
     private void ChangeDirection()
@@ -93,6 +102,7 @@ public class PlayerController : MonoBehaviour
             if ((contact.normal.y > 0) && rb.IsTouchingLayers(ground))
             {
                 isGrounded = true;
+                rb.velocity = new Vector2(rb.velocity.x, 0f);
                 shotsLeft = magazineSize;
             }
             // else if (contact.normal.y < 0)
@@ -114,8 +124,5 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnCollisionExit2D(Collision2D collision){
-        if (!rb.IsTouchingLayers(ground)){
-            isGrounded = false;
-        }
     }
 }
