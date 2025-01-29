@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
         thisAnim = transform.GetChild(0).GetComponent<Animator>();
         thisAnim2 = transform.GetChild(0).GetChild(0).GetComponent<Animator>();
         shotsLeft = magazineSize;
+        controlEnabled = true;
     }
 
     // Update is called once per frame
